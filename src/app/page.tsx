@@ -8,11 +8,14 @@ export default function HomePage() {
         <p className="text-sm text-muted-foreground">ControlRent</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">Restaurant profitability control</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Base44-like app shell is ready. Continue to dashboard.
+          Sign in to access your dashboard.
         </p>
-        <div className="mt-6">
-          <Link href="/app/dashboard">
-            <Button>Go to dashboard</Button>
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <Link href="/login">
+            <Button>Go to login</Button>
+          </Link>
+          <Link href="/register">
+            <Button variant="secondary">Create account</Button>
           </Link>
         </div>
       </div>

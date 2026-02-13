@@ -18,20 +18,29 @@ npm run dev
 cp .env.example .env
 ```
 
-2. Generate Prisma Client:
+2. Set a long random value for `AUTH_SECRET` in `.env`.
+
+3. Generate Prisma Client:
 
 ```bash
 npm run prisma:generate
 ```
 
-3. Create/apply the initial migration:
+4. Create/apply the initial migration:
 
 ```bash
 npm run prisma:migrate
 ```
 
-4. Seed demo data:
+5. Seed demo data:
 
 ```bash
 npm run seed
 ```
+
+## Auth endpoints
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/me`

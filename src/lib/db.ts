@@ -1,20 +1,21 @@
-type PrismaClientLike = {
-  $disconnect: () => Promise<void>;
+type PrismaLikeClient = Record<string, unknown>;
+
+type GlobalForPrisma = {
+  prisma: PrismaLikeClient | undefined;
 };
 
-type PrismaClientConstructor = new () => PrismaClientLike;
+function createClient(): PrismaLikeClient {
+  const req = eval("require") as (id: string) => { PrismaClient: new () => PrismaLikeClient };
+  const { PrismaClient } = req("@prisma/client");
+  return new PrismaClient();
+}
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { PrismaClient } = require("@prisma/client") as {
-  PrismaClient: PrismaClientConstructor;
-};
+export function getDb(): PrismaLikeClient {
+  const globalForPrisma = globalThis as unknown as GlobalForPrisma;
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientLike | undefined;
-};
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createClient();
+  }
 
-export const db = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = db;
+  return globalForPrisma.prisma;
 }
